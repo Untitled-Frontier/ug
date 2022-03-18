@@ -27,7 +27,7 @@ function App() {
   const [injectedChainId, setInjectedChainId] = useState(null);
   const [hardcodedChainId, setHardcodedChainId] = useState(null); // set it manually
 
-  let NFTAddress = "0xab387f2826759BbE08eA102d0C067365187648C7";
+  let NFTAddress = "0x3142CADbCDaa042aCC78B69D4E6DD387BAE00F44"; // rinkeby
 
   // should be changed in contracts, test, UI
   let dfPrice = "0.035"; // ~$100
@@ -50,15 +50,8 @@ function App() {
 
               // comment out line for local or prod
               // setHardcodedChainId(1); // mainnet
-              // setHardcodedChainId(4); // rinkeby
-              setHardcodedChainId(id); // local (uses injectedProvider)
-
-              // for local testing
-              /*console.log('s');
-              await injectedProvider.network.provider.send("hardhat_setBalance", [
-                "0x0cacc6104d8cd9d7b2850b4f35c65c1ecdeece03",
-                "0x10000",
-              ]);*/
+              setHardcodedChainId(4); // rinkeby
+              // setHardcodedChainId(id); // local (uses injectedProvider)
           }
       }
   } 

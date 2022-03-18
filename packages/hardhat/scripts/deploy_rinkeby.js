@@ -1,24 +1,17 @@
 // import { ethers } from "ethers";
+const generator = require('./helpers/merkle_generator.js');
 
 async function main() {
-    const S = await ethers.getContractFactory("Souls");
+    const tree = await generator();
+    const root = tree.getHexRoot();
+    console.log("Generated merkle root: ", root)
+    const C = await ethers.getContractFactory("Collection");
 
-    const s = await S.deploy("Souls", "SOULS","0xaF69610ea9ddc95883f97a6a3171d52165b69B03",  '100', '2627308000', "0x600a4446094C341693C415E6743567b9bfc8a4A8");
-    const sd = await s.deployed();
-    const sAddress = await s.address;
-    /*const mintg = await sd.estimateGas.mintSoul({value: ethers.utils.parseEther("0.0088")});
-    console.log(mintg.toString());
-    const id = await s.newlyMinted();
-    const ig = await sd.estimateGas.tokenURI(id);
-    const i = await s.generateImage(id);
-    const t = await s.generateTraits(id);
-    const u = await s.tokenURI(id);
-
-    console.log(ig.toString());
-    console.log(t.toString());
-    console.log(u.toString());*/
-    console.log("Souls deployed to: ", sAddress);
-    // console.log(i);
+    // 1648247492 = 2022-03-25
+    const c = await C.deploy("Little Martians", "LMS","0xaF69610ea9ddc95883f97a6a3171d52165b69B03", "0xaF69610ea9ddc95883f97a6a3171d52165b69B03", '100', '1648247492', root);
+    const cd = await c.deployed();
+    const cAddress = await c.address;
+    console.log("LM deployed to: ", cAddress);
   }
   
   main()

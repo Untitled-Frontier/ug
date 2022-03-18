@@ -25,6 +25,7 @@
     "chain": "hardhat node",
     "compile": "hardhat compile",
     "deploy_local": "hardhat run --network localhost scripts/deploy_local.js",
+    "deploy_rinkeby": "hardhat run --network rinkeby scripts/deploy_rinkeby.js",
     "generate_merkle_root": "hardhat run scripts/generate_merkle_root.js",
     "publish_contracts": "hardhat run scripts/publish.js",
     "set_testnet_balance": "hardhat run scripts/set_testnet_balance.js",

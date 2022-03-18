@@ -17,7 +17,7 @@
     "chain": "yarn workspace @lmhmm_app/hardhat chain",
     "generate_merkle_root": "yarn workspace @lmhmm_app/hardhat generate_merkle_root",
     "deploy_contracts_local": "yarn workspace @lmhmm_app/hardhat deploy_local",
-    "deploy_contracts_rinkeby": "cd packages/hardhat && npx hardhat run --network rinkeby scripts/deploy_rinkeby.js",
+    "deploy_contracts_rinkeby": "yarn workspace @lmhmm_app/hardhat deploy_rinkeby",
     "deploy_contracts_mainnet": "cd packages/hardhat && npx hardhat run --network mainnet scripts/deploy.js",
     "publish_contracts": "yarn workspace @lmhmm_app/hardhat publish_contracts",
     "set_testnet_balance": "yarn workspace @lmhmm_app/hardhat set_testnet_balance",
