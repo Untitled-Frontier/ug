@@ -10,7 +10,7 @@ async function main() {
   if (!fs.existsSync(publishDir)){
     fs.mkdirSync(publishDir);
   }
-  fs.copyFile(buildDir+"/Souls.sol/Souls.json", publishDir+"/Souls.json", (err) => { console.log(err)});
+  fs.copyFile(buildDir+"/Collection.sol/Collection.json", publishDir+"/Collection.json", (err) => { console.log(err)});
   console.log("Publishing",chalk.cyan('NFT'), "to",chalk.yellow(publishDir))
 }
 main().then(() => {

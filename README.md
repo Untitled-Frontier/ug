@@ -1,7 +1,7 @@
 
-## Painting of Forgotten Souls
+## Little Martians
 
-Paintings of Souls NFTs for the short story: Memories of Atlas. All metadata + art is on-chain.
+Little Martians NFTs for the short story: Little Martians and The Human Memorial Monument. All metadata + art is on-chain.
 
 ### Technicals
 
@@ -17,20 +17,27 @@ Paintings of Souls NFTs for the short story: Memories of Atlas. All metadata + a
 
 Running Locally:
 
-### 1. Start Node + Deploy Contracts 
+### 1. Start Node + Deploy Contracts   
+
+In primary folder:  
 ```yarn install```  
-```yarn run node```   
+```yarn run chain```   
 It will use the default mnemonic in ```./scripts/wallet-utils.js``` and start a local EVM.   
 If you need a custom mnemonic, just:   
 ```export MNEMONIC="<insert_your_own_mnemonic_here>```   
-```yarn run deploy_contracts_local```    
-Save the curve address manually and copy-paste it to curveAddress in react-app/src/App.js.   
+```yarn run deploy_contracts_local```  
+Optionally, you can modify "set_testnet_balance" to give other address some test ETH.   
+Save the address manually and copy-paste it to address in react-app/src/App.js.   
 ```yarn run publish_contracts```  
 This copies the build files to the react-app.
 
 ### 2. Start Server
 Back in this repo:   
 ```yarn run start```
+
+### 3. Merkle Tree
+
+In order to use the merkle tree, you can need to edit leaves.js with the addresses that can redeem an NFT. It's in both packages and thus needs to be copied to both, such that contract gets the root and the front-end can also verify it before sending a transaction.
 
 ### License
 

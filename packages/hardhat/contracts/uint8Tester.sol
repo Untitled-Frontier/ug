@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 /*
 A contract specifically to test that toUint8 generates the right numbers so that all permutations 

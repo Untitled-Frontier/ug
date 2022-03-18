@@ -14,6 +14,7 @@ module.exports = {
   networks: {
     localhost: {
       url: 'http://localhost:8545',
+      blockGasLimit: 10000000000
     },
     hardhat: {
       accounts: defaultAccounts(),
@@ -31,7 +32,7 @@ module.exports = {
     apiKey: ''
   },
   solidity: {
-    version : "0.8.4",
+    version : "0.8.9",
   },
   gasReporter: {
     currency: 'USD',

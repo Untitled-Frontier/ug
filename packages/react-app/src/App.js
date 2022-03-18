@@ -11,10 +11,10 @@ import { usePoller } from "./hooks";
 
 import Transactor from "./helpers/Transactor.js"; 
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import generateTree from "./helpers/merkle_generator.js";
 
 // Artifacts
-import NFTJson from "./contracts/Souls.json";
+import NFTJson from "./contracts/Collection.json";
 
 function App() {
   /* Universal State*/
@@ -27,13 +27,13 @@ function App() {
   const [injectedChainId, setInjectedChainId] = useState(null);
   const [hardcodedChainId, setHardcodedChainId] = useState(null); // set it manually
 
-  let NFTAddress = "0x6dae8a922b66225de1728bd9e5f2b7a4bdd4699b";
+  let NFTAddress = "0xab387f2826759BbE08eA102d0C067365187648C7";
 
   // should be changed in contracts, test, UI
-  let dfPrice = "0.01"; // ~$30
-  let dxPrice = "0.068"; // ~$200
+  let dfPrice = "0.035"; // ~$100
 
   const [NFTSigner, setNFTSigner] = useState(null);
+  const [tree, setTree] =  useState(null);
 
   // NOTE: Currently not being used in Transactor, but keeping it in the code in case I want to turn it back on.
   // Currently, it's expected that the web3 provider sets it (eg, MetaMask fills it in).
@@ -49,9 +49,16 @@ function App() {
               setInjectedChainId(id);
 
               // comment out line for local or prod
-              setHardcodedChainId(1); // mainnet
+              // setHardcodedChainId(1); // mainnet
               // setHardcodedChainId(4); // rinkeby
-              // setHardcodedChainId(id); // local (uses injectedProvider)
+              setHardcodedChainId(id); // local (uses injectedProvider)
+
+              // for local testing
+              /*console.log('s');
+              await injectedProvider.network.provider.send("hardhat_setBalance", [
+                "0x0cacc6104d8cd9d7b2850b4f35c65c1ecdeece03",
+                "0x10000",
+              ]);*/
           }
       }
   } 
@@ -63,19 +70,21 @@ function App() {
         const signer = await injectedProvider.getSigner();
         const NFTSigner = new ethers.Contract(NFTAddress, NFTJson.abi, signer);
         setNFTSigner(NFTSigner);
+
+        // also load the merkle tree
+        const tree =  await generateTree();
+        setTree(tree);
       }
     }
     loadSigners();
   }, [injectedChainId]);
 
 
-  async function mintNFT(type) {
-    let val;
-    if(type === "default") { val = ethers.utils.parseEther(dfPrice); }
-    if(type === "deluxe") { val = ethers.utils.parseEther(dxPrice); }
+  async function mintNFT() {
+    let val = ethers.utils.parseEther(dfPrice);
     const tx = Transactor(injectedProvider, gasPrice);
     setMinting(true);
-    tx(NFTSigner.functions.mintSoul({value: val}), async function (update) {
+    tx(NFTSigner.functions.mint({value: val}), async function (update) {
       /*Used for testing UI*/
       // await new Promise(resolve => setTimeout(resolve, 5000));
       console.log(update);
@@ -104,10 +113,11 @@ function App() {
     });
   }
 
-  async function claimSoul(tokenId) {
+  async function claim(proof) {
     const tx = Transactor(injectedProvider, gasPrice);
     setMinting(true);
-    tx(NFTSigner.functions.claimSoul(tokenId), async function (update) {
+    console.log('proof', proof);
+    tx(NFTSigner.functions.loyalMint(proof), async function (update) {
       /*Used for testing UI*/
       // await new Promise(resolve => setTimeout(resolve, 5000));
       console.log(update);
@@ -129,6 +139,11 @@ function App() {
           setMinting(false);
         }
 
+        // already claimed
+        if(update.code === -32603) {
+          setMinting(false);
+        }
+
         /* if too high gas limit */
         if(update.code === "UNPREDICTABLE_GAS_LIMIT") {
           setMinting(false);
@@ -137,15 +152,7 @@ function App() {
     });
   }
 
-  const graphURI = 'https://api.thegraph.com/subgraphs/name/simondlr/tlatc';
-
-  const client = new ApolloClient({
-    uri: graphURI,
-    cache: new InMemoryCache(),
-  });
-  
   return (
-    <ApolloProvider client={client}>
       <div>
       <Account
         address={address}
@@ -161,16 +168,15 @@ function App() {
             injectedChainId={injectedChainId}
             hardcodedChainId={hardcodedChainId}
             mintNFT={mintNFT}
-            claimSoul={claimSoul}
+            claim={claim}
             tokenId={tokenId}
             minting={minting}
             dfPrice={dfPrice}
-            dxPrice={dxPrice}
+            tree={tree}
           />
       </Route>
       </Switch>
       </div>
-    </ApolloProvider>
   );
 }
 
