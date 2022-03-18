@@ -8,5 +8,5 @@ async function main() {
     return merkleTree;
   }
 
-  module.exports = main
+  // module.exports = main
   export default main
