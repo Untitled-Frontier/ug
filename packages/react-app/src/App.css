@@ -11,6 +11,8 @@ h2, h3 {
 .App {
   text-align: left;
   max-width: 600px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 0px auto auto;
 }
 
@@ -23,6 +25,8 @@ h2, h3 {
 .account {
   text-align: right;
   max-width: 600px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 20px auto 4px;
 }
 
