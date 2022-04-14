@@ -45,7 +45,7 @@ contract Collection is ERC721 {
         descriptor = new CollectionDescriptor();
         loyaltyRoot = root_;
 
-        // mint first claim UF. It's a known address in the merkle tree to populate collection sites before launch
+        // mint first claim UF. It's a known address in the merkle tree to populate NFT marketplaces before launch
         _createNFT(owner);
         claimed[owner] =  true;
     }
@@ -97,7 +97,7 @@ contract Collection is ERC721 {
     }
 
     function mint() public payable {
-        require(msg.value >= 0.035 ether, 'MORE ETH NEEDED'); //~$100
+        require(msg.value >= 0.032 ether, 'MORE ETH NEEDED'); //~$100
         _mint(msg.sender);
     }
 
@@ -126,11 +126,9 @@ contract Collection is ERC721 {
 
     function _createNFT(address _owner) internal {
         uint256 tokenId = uint(keccak256(abi.encodePacked(block.timestamp, _owner)));
-        // newlyMinted = tokenId; // tests
         super._mint(_owner, tokenId);
     }
 
-    // anyone can withdraw
     function withdrawETH() public {
         require(msg.sender == collector, "NOT_COLLECTOR");
         recipient.call{value: address(this).balance}(""); // this is safe because the recipient is known

@@ -11,6 +11,7 @@ async function main() {
     const cd = await c.deployed();
     const cAddress = await c.address;
     console.log("LM deployed to: ", cAddress);
+
   }
   
   main()

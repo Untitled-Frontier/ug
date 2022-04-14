@@ -18,11 +18,11 @@
     "generate_merkle_root": "yarn workspace @lmhmm_app/hardhat generate_merkle_root",
     "deploy_contracts_local": "yarn workspace @lmhmm_app/hardhat deploy_local",
     "deploy_contracts_rinkeby": "yarn workspace @lmhmm_app/hardhat deploy_rinkeby",
-    "deploy_contracts_mainnet": "cd packages/hardhat && npx hardhat run --network mainnet scripts/deploy.js",
+    "deploy_contracts_mainnet": "yarn workspace @lmhmm_app/hardhat deploy_mainnet",
     "publish_contracts": "yarn workspace @lmhmm_app/hardhat publish_contracts",
     "set_testnet_balance": "yarn workspace @lmhmm_app/hardhat set_testnet_balance",
     "test_contracts": "yarn workspace @lmhmm_app/hardhat test",
-    "verify": "cd packages/hardhat && npx hardhat verify --network mainnet 0x6dae8a922b66225de1728bd9e5f2b7a4bdd4699b 'Paintings of Forgotten Souls' 'SOULS' '0xaF69610ea9ddc95883f97a6a3171d52165b69B03' '0xec0ef86a3872829F3EC40de1b1b9Df54a3D4a4b3' '1632492000' '1634911200' '0x600a4446094C341693C415E6743567b9bfc8a4A8'",
+    "verify": "yarn workspace @lmhmm_app/hardhat verify",
     "start": "yarn workspace @lmhmm_app/react-app start",
     "compile": "yarn workspace @lmhmm_app/hardhat compile"
   },

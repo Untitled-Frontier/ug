@@ -20,7 +20,8 @@ const symbol = "NFTS";
 
 const metadataDescription = "Ceramic beings with simulated souls collected by the Martian, Nyx.";
 
-let dfPrice = "0.035"; // ~$100
+let dfPrice = "0.032"; // ~$100
+let dfPriceHalf = "0.016";
 
 /* END CONFIG */
 let factory;
@@ -208,7 +209,7 @@ describe("Collection", function() {
     // proofs were generated using the test suite from the splits repo (via mirror).
     const proof3 = ['0xd2b16e81b4697a13b932890b8d4a8d4c42bd6b5d3a3bd07f88076aff395214dd'];
     const proof4 = ['0x5acd7e3e41142de32e4123f02edf1ca5b9d81c4648728306d2cfbaaf916ab52b'];
-    let dfPriceHalf = "0.0175";
+    let dfPriceHalf = "0.016";
     const tx3 = await wrappedProxy.connect(signers[2]).claimForAllWindows(accounts[3], 50000000, proof3);
     await expect(tx3).to.changeEtherBalance(signers[3], ethers.utils.parseEther(dfPriceHalf)); // proxy received funds
 

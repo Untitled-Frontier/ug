@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/simondlr2/code/ethereum/lmhmm/lmhmm_app/packages/hardhat/contracts/Collection.sol": {
-      "lastModificationDate": 1647566650238,
-      "contentHash": "65376d7aed6b51a3a98825663fa37605",
+      "lastModificationDate": 1649881893823,
+      "contentHash": "b9d2e6803ee00c9aee428fe85bf4a3a7",
       "sourceName": "contracts/Collection.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -119,8 +119,8 @@
       ]
     },
     "/Users/simondlr2/code/ethereum/lmhmm/lmhmm_app/packages/hardhat/contracts/utils/MerkleProof.sol": {
-      "lastModificationDate": 1647009836962,
-      "contentHash": "c7d78b5de1580fd36edd239b9228eee6",
+      "lastModificationDate": 1649866934482,
+      "contentHash": "21cd0554e78115fb82f9f28fc9de935d",
       "sourceName": "contracts/utils/MerkleProof.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -145,9 +145,7 @@
           }
         }
       },
-      "imports": [
-        "hardhat/console.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.0"
       ],
@@ -156,8 +154,8 @@
       ]
     },
     "/Users/simondlr2/code/ethereum/lmhmm/lmhmm_app/packages/hardhat/contracts/CollectionDescriptor.sol": {
-      "lastModificationDate": 1647612176019,
-      "contentHash": "caf1a83ea988cbcd5d921b5b82509f1a",
+      "lastModificationDate": 1649866005866,
+      "contentHash": "1182eadaaf493b92c49f54842b4e6953",
       "sourceName": "contracts/CollectionDescriptor.sol",
       "solcConfig": {
         "version": "0.8.9",

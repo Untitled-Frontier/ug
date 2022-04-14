@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/cryptography/MerkleProof.sol)
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 pragma solidity ^0.8.0;
 
@@ -46,8 +46,8 @@ library MerkleProof {
         bytes32 computedHash = leaf;
         for (uint256 i = 0; i < proof.length; i++) {
             bytes32 proofElement = proof[i];
-            console.logBytes32(computedHash);
-            console.logBytes32(proofElement);
+            // console.logBytes32(computedHash);
+            // console.logBytes32(proofElement);
             if (computedHash <= proofElement) {
                 // Hash(current computed hash + current element of the proof)
                 //computedHash = _efficientHash(computedHash, proofElement);

@@ -47,9 +47,9 @@ contract CollectionDescriptor {
         ));
     }
 
-    function generateImage(uint256 tokenId) public view returns (string memory) {
+    function generateImage(uint256 tokenId) public pure returns (string memory) {
         bytes memory hash = abi.encodePacked(bytes32(tokenId));
-        uint256 fillI = uint256(toUint8(hash,0));
+        uint256 fillI = uint256(toUint8(hash,1));
         string memory fill = 'none';
         if(fillI < 128) { fill = 'white'; }
         return string(
@@ -113,8 +113,8 @@ contract CollectionDescriptor {
     }
 
     function generateBlur(bytes memory hash) public pure returns (string memory) {
-        uint256 blurDegree = uint256(toUint8(hash,1))/64; // 1 - 4
-        uint256 blurSeed = uint256(toUint8(hash,2));
+        uint256 blurDegree = uint256(toUint8(hash,2))/64; // 1 - 4
+        uint256 blurSeed = uint256(toUint8(hash,3));
 
         return string(abi.encodePacked(
             svgFilter('blur'), 
@@ -129,10 +129,10 @@ contract CollectionDescriptor {
     }
 
     function generateSteps(bytes memory hash) public pure returns (string memory) {
-        uint256 stepsDegree = uint256(toUint8(hash,1))/64; // 1 - 4
-        uint256 stepsInterDegree = 1+uint256(toUint8(hash,2))*100/256/10;
-        uint256 stepsSeed = uint256(toUint8(hash,2));
-        uint256 stepsScale = 80+uint256(toUint8(hash,2))/2;
+        uint256 stepsDegree = uint256(toUint8(hash,4))/64; // 1 - 4
+        uint256 stepsInterDegree = 1+uint256(toUint8(hash,5))*100/256/10;
+        uint256 stepsSeed = uint256(toUint8(hash,6));
+        uint256 stepsScale = 80+uint256(toUint8(hash,7))/2;
         return string(abi.encodePacked(
             svgFilter('steps'), 
             '<feTurbulence baseFrequency="',generateDecimalString(stepsInterDegree,stepsDegree+1),'" seed="',toString(stepsSeed),'" result="turbs"/>',
@@ -145,9 +145,9 @@ contract CollectionDescriptor {
     }
 
     function generateTurbs1(bytes memory hash) public pure returns (string memory) {
-        uint256 turbs1Degree = uint256(toUint8(hash,3))/128; // 0 - 2 (2 is very slightly rarer due to it ending at 2.965)
-        uint256 turbs1InterDegree = 1+uint256(toUint8(hash,12))*100/256/10;
-        uint256 turbs1Seed = uint256(toUint8(hash,4));
+        uint256 turbs1Degree = uint256(toUint8(hash,8))/128; // 0 - 2 (2 is very slightly rarer due to it ending at 2.965)
+        uint256 turbs1InterDegree = 1+uint256(toUint8(hash,9))*100/256/10;
+        uint256 turbs1Seed = uint256(toUint8(hash,10));
         return string(abi.encodePacked(
             svgFilter('turb1'), 
             '<feTurbulence baseFrequency="',generateDecimalString(turbs1InterDegree,turbs1Degree+2),'" seed="',toString(turbs1Seed),'" result="turbs"/>',
@@ -156,15 +156,15 @@ contract CollectionDescriptor {
     }
 
     function generateTurbs2(bytes memory hash) public pure returns (string memory) {
-        uint256 turbs2Degree = uint256(toUint8(hash,5))/64; // 0 - 3
-        uint256 turbs2InterDegree = 1+uint256(toUint8(hash,15))*100/256/10;
-        uint256 turbs2Seed = uint256(toUint8(hash,6));
+        uint256 turbs2Degree = uint256(toUint8(hash,11))/64; // 0 - 3
+        uint256 turbs2InterDegree = 1+uint256(toUint8(hash,12))*100/256/10;
+        uint256 turbs2Seed = uint256(toUint8(hash,13));
         // do colour tempering next
-        string memory redOffset = getColourOffset(hash, 7);
-        string memory greenOffset = getColourOffset(hash, 8);
-        string memory blueOffset = getColourOffset(hash, 9);
+        string memory redOffset = getColourOffset(hash, 14);
+        string memory greenOffset = getColourOffset(hash, 15);
+        string memory blueOffset = getColourOffset(hash, 16);
 
-        uint256 alphaSlope = 1+uint256(toUint8(hash,10))/64;
+        uint256 alphaSlope = 1+uint256(toUint8(hash,17))/64;
 
         return string(abi.encodePacked(
             svgFilter('turb2'), 

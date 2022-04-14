@@ -26,9 +26,11 @@
     "compile": "hardhat compile",
     "deploy_local": "hardhat run --network localhost scripts/deploy_local.js",
     "deploy_rinkeby": "hardhat run --network rinkeby scripts/deploy_rinkeby.js",
+    "deploy_mainnet": "hardhat run --network mainnet scripts/deploy_mainnet.js",
     "generate_merkle_root": "hardhat run scripts/generate_merkle_root.js",
     "publish_contracts": "hardhat run scripts/publish.js",
     "set_testnet_balance": "hardhat run scripts/set_testnet_balance.js",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "verify": "hardhat verify --network mainnet 0xaBFfa842C2E03446AD0cACAdf9570bf1a45E2432 'Little Martians' 'LMS' '0xaF69610ea9ddc95883f97a6a3171d52165b69B03' '0x2c48763e807F51D58cFc72f3D903513E12AF3551' '1650290400' '1652709600' '0x5a205b661dc03e3b33329ec05c331ddb579d0a146b5a14e68d88d5eafaaa5d15'"
   }
 }

@@ -11,11 +11,11 @@ function IntroPage(props) {
     const [mintSection, setMintSection] = useState('');
     const [displaySection, setDisplaySection] = useState('');
 
-    const startDateString = "4 April 2022 14:00 GMT";
-    const endDateString = "25 April 2022 14:00 GMT";
-    const snapshotDate = "14 March 2022 14:00 GMT";
-    const startDateUnix = 0;
-    const endDateUnix = 0;
+    const startDateString = "18 April 2022 14:00 GMT";
+    const endDateString = "16 May 2022 14:00 GMT";
+    const snapshotDate = "11 April 2022 14:00 GMT";
+    const startDateUnix = 1650290400;
+    const endDateUnix = 1652709600;
 
     const wrongNetworkHTML = <Fragment>You are on the wrong network. Please switch to mainnet on your web3 wallet and refresh the page.</Fragment>;
 
@@ -66,8 +66,9 @@ function IntroPage(props) {
           }
 
           const newMintHTML = <Fragment>
-            {props.dfPrice} ETH (~$100). Available, with no supply limit, until {endDateString}. <br />
-            <Button size={"small"} disabled={disabled} loading={props.minting} onClick={mintNFT}>
+            {props.dfPrice} ETH per Little Martian. <br />Available to mint and claim, with no supply limit, until {endDateString}. <br />
+            <br />
+            <Button size={"small"} disabled={false} loading={props.minting} onClick={mintNFT}>
                 Mint Little Martian
             </Button>
             <br />
@@ -100,7 +101,7 @@ function IntroPage(props) {
           <Fragment>
             <h2>Your new Little Martian!</h2>
             <CellsComponent tokenId={props.tokenId} NFTSigner={props.NFTSigner} /> <br />
-            To interact with the NFT: to view it, to transfer it, and to see other NFTs, head to <a href="https://opensea.io/collection/paintings-of-forgotten-souls" target="_blank">OpenSea</a>. 
+            To interact with the NFT: to view it, to transfer it, and to see other NFTs, head to <a href="https://opensea.io/collection/logged-universe-little-martians" target="_blank">OpenSea</a>. 
             It's a platform to view and interact with NFTs, including Little Martians. It will be in your profile. 
             If you choose to mint another, new Little Martian, it will update to display your new one. All Little Martians, however, are recorded
             on the Ethereum blockchain, and viewable in OpenSea.
@@ -113,13 +114,13 @@ function IntroPage(props) {
 
         <div className="App" style={{textAlign:"justify"}}> 
         <img src={NFTImg} alt="Little Martians" style={{display:"block", marginLeft:"auto", marginRight: "auto", maxWidth:"100%"}}/> <br />
-        In the story, "Little Martians and The Human Memorial Monument" by Vanessa Rosa, the Martian, Nyx, gives simulated minds a new home and stores them in cosmic ceramic bodies.
+        In the story, <a href="https://www.untitledfrontier.studio/blog/logged-universe-3-little-martians-amp-the-human-memorial-monument">"Little Martians and The Human Memorial Monument" by Vanessa Rosa</a>, the Martian, Nyx, gives simulated minds a new home and stores them in cosmic ceramic bodies.
         The patterns on the outside stores the information that defines who they are. NFT memorabilia for this story consists of ((NUMBER)) generative, deluxe, limited editions on Foundation and on-chain Little Martians.
         <br />
         <br />
         "Little Martians" come in the form of fully on-chain generative art NFTs! 
         From {startDateString} until {endDateString}, fans can mint on-chain Little Martians. 
-        If you held any Anchor Certificate from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-1-the-line-to-anchor-city">"The Line To Anchor City"</a> PLUS any Painting of Forgotten Souls from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-2-memories-of-atlas">"Memories of Atlas"</a> by the snapshot of {snapshotDate}, you can claim an on-chain Martian for free!
+        If you held any Anchor Certificate from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-1-the-line-to-anchor-city">"The Line To Anchor City"</a> PLUS any Painting of Forgotten Souls from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-2-memories-of-atlas">"Memories of Atlas"</a> by the snapshot date of {snapshotDate}, you can claim an on-chain Martian for free!
         <br />
         <br />
         <h2>[] Little Martians</h2>

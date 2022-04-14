@@ -2,6 +2,10 @@ body {
   background: linear-gradient(90deg, #ebf0c3 0%, #f5b8f4 100%);
 }
 
+body > iframe {
+  pointer-events: none;
+}
+
 h2, h3 {
   color:black;
   font-family: 'Courier New';
