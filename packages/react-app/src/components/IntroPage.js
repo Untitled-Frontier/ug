@@ -66,9 +66,9 @@ function IntroPage(props) {
           }
 
           const newMintHTML = <Fragment>
-            {props.dfPrice} ETH per Little Martian. <br />Available to mint and claim, with no supply limit, until {endDateString}. <br />
+            <b>{props.dfPrice} ETH per Little Martian.</b> <br />Available to mint and claim, with no supply limit, from {startDateString} until {endDateString}. <br />
             <br />
-            <Button size={"small"} disabled={false} loading={props.minting} onClick={mintNFT}>
+            <Button size={"small"} disabled={disabled} loading={props.minting} onClick={mintNFT}>
                 Mint Little Martian
             </Button>
             <br />
@@ -115,26 +115,32 @@ function IntroPage(props) {
         <div className="App" style={{textAlign:"justify"}}> 
         <img src={NFTImg} alt="Little Martians" style={{display:"block", marginLeft:"auto", marginRight: "auto", maxWidth:"100%"}}/> <br />
         In the story, <a href="https://www.untitledfrontier.studio/blog/logged-universe-3-little-martians-amp-the-human-memorial-monument">"Little Martians and The Human Memorial Monument" by Vanessa Rosa</a>, the Martian, Nyx, gives simulated minds a new home and stores them in cosmic ceramic bodies.
-        The patterns on the outside stores the information that defines who they are. NFT memorabilia for this story consists of ((NUMBER)) generative, deluxe, limited editions on Foundation and on-chain Little Martians.
+        The patterns on the outside stores the information that defines who they are. NFT memorabilia for this story consists of <a href="https://foundation.app/collection/lmhmm">12 generative, limited edition scenes on Foundation</a> and on-chain Little Martians.
         <br />
         <br />
-        "Little Martians" come in the form of fully on-chain generative art NFTs! 
+        <video controls src="https://ipfs.io/ipfs/QmNfFaTqxeazRAVXnNt46oU5jVhtsFiz89rzG6wS1rnod1/nft.mp4" width="100%">
+        Sorry, your browser doesn't support embedded videos.
+        </video>
+        <i>A Generative Art Scene by Vanessa Rosa and Gene Kogan. <a href="https://foundation.app/collection/lmhmm">Available on Foundation</a>.</i>
+        <br />
+        <br />
+        <h2>[] On-chain Little Martians</h2>
+        The on-chain "Little Martians" come in the form of fully on-chain generative art NFTs! 
         From {startDateString} until {endDateString}, fans can mint on-chain Little Martians. 
         If you held any Anchor Certificate from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-1-the-line-to-anchor-city">"The Line To Anchor City"</a> PLUS any Painting of Forgotten Souls from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-2-memories-of-atlas">"Memories of Atlas"</a> by the snapshot date of {snapshotDate}, you can claim an on-chain Martian for free!
         <br />
         <br />
-        <h2>[] Little Martians</h2>
         Any amount of on-chain Little Martians can be generated during the campaign period of 4 weeks. 
         After this period no new ones can be minted or claimed.
         <br />
         <br />
-        Each Little Martian consists of 10 different shells and a random generative art pattern that comprises their DNA. Each one is unique, changing variations of patterns, colours, blurs, and intricacies.
+        Each Little Martian consists of 10 different shells and a random generative art pattern that comprises their DNA. Each one is unique, changing variations of patterns, colours, blurs, and intricacies. Over 18+ variables compound to create unique little martians: ready for their adventure through the cosmos.
         <br />
         <br />
         The components that make up the Little Martians are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Thus, you are free to use the NFTs as you wish. <a href="https://github.com/Untitled-Frontier/lmhmm">The code is available on Github.</a>
         <br />
         <br />
-        A deluxe, limited collection of ((NUMBER)) generative scenes from "Little Martians and The Human Memorial Monument" is available on Foundation.
+        You can view already minted "Little Martians" on <a href="https://opensea.io/collection/logged-universe-little-martians" target="_blank">OpenSea</a>.
         <br />
         <br />
         {/* MINT SECTION */}
