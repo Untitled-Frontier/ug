@@ -95,7 +95,9 @@ function IntroPage(props) {
       }, [props.hardcodedChainId, props.NFTSigner]);
 
     useEffect(() => {
+      
       if(props.tokenId !== 0) {
+        console.log('tid: ', props.tokenId)
         // new NFT was minted, thus display it.
         setDisplaySection(
           <Fragment>
