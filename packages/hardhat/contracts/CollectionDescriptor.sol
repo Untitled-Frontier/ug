@@ -27,7 +27,7 @@ contract CollectionDescriptor {
         uint256 index = uint256(toUint8(hash,0))*100/256; // 0 - 100
         string memory ceramicType = '{"trait_type": "Ceramic Shell", "value":';
         string memory ceramicValue = "";
-
+        
         if(index < 10) { ceramicValue = '"Type One"}'; }
         if(index < 20) { ceramicValue = '"Type Two"}'; }
         if(index < 30) { ceramicValue = '"Type Three"}'; }

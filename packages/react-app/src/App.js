@@ -6,12 +6,15 @@ import "./App.css";
 import { Account } from "./components"
 
 import IntroPage from './components/IntroPage.js';
+import CollectionPage from './components/CollectionPage.js';
 
 import { usePoller } from "./hooks";
 
 import Transactor from "./helpers/Transactor.js"; 
 
 import generateTree from "./helpers/merkle_generator.js";
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 // Artifacts
 import NFTJson from "./contracts/Collection.json";
@@ -148,7 +151,15 @@ function App() {
     });
   }
 
+  const graphURI = 'https://api.thegraph.com/subgraphs/name/wighawag/eip721-subgraph';
+
+  const client = new ApolloClient({
+    uri: graphURI,
+    cache: new InMemoryCache(),
+  });
+
   return (
+    <ApolloProvider client={client}>
       <div>
       <Account
         address={address}
@@ -171,8 +182,20 @@ function App() {
             tree={tree}
           />
       </Route>
+      <Route exact path="/collection">
+          <CollectionPage
+            address={address}
+            NFTSigner={NFTSigner}
+            injectedChainId={injectedChainId}
+            hardcodedChainId={hardcodedChainId}
+            tokenId={tokenId}
+            minting={minting}
+            dfPrice={dfPrice}
+          />
+      </Route>
       </Switch>
       </div>
+    </ApolloProvider>
   );
 }
 

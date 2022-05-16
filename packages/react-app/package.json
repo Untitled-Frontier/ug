@@ -21,6 +21,7 @@
     "axios": "^0.25.0",
     "bnc-notify": "^1.9.2",
     "ethers": "^5.5.3",
+    "graphql": "^15.5.0",
     "keccak256": "^1.0.0",
     "merkletreejs": "0.2.31",
     "moment": "^2.29.1",

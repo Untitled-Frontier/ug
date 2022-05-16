@@ -218,4 +218,6 @@ describe("Collection", function() {
 
   });
 
+  //todo: test traits
+
 });

@@ -37,7 +37,7 @@ function IntroPage(props) {
 
     useEffect(() => {
 
-        if(typeof props.address !== 'undefined' && props.ACSigner !== null && props.tree !== null) {
+        if(typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
           console.log(props.address.toLowerCase());
           let disabled = true; 
           var unix = Math.round(+new Date()/1000);
@@ -59,16 +59,18 @@ function IntroPage(props) {
 
           if(inTree) {
             claimHTML = <Fragment>
-              <Button size={"small"} disabled={disabled} loading={props.minting} onClick={claim}>
+              The campaign has ended. No more claiming is possible. <br />
+              <br />
+              <Button size={"small"} disabled={true} loading={props.minting} onClick={claim}>
                 Claim Little Martian
               </Button>
               </Fragment>
           }
 
           const newMintHTML = <Fragment>
-            <b>{props.dfPrice} ETH per Little Martian.</b> <br />Available to mint and claim, with no supply limit, from {startDateString} until {endDateString}. <br />
+            <b>{props.dfPrice} ETH per Little Martian.</b> <br />Available to mint and claim, with no supply limit, from {startDateString} until {endDateString}. <b>The campaign has ended!</b> <br />
             <br />
-            <Button size={"small"} disabled={disabled} loading={props.minting} onClick={mintNFT}>
+            <Button size={"small"} disabled={true} loading={props.minting} onClick={mintNFT}>
                 Mint Little Martian
             </Button>
             <br />
@@ -133,7 +135,7 @@ function IntroPage(props) {
         <br />
         <br />
         Any amount of on-chain Little Martians can be generated during the campaign period of 4 weeks. 
-        After this period no new ones can be minted or claimed.
+        After this period no new ones can be minted or claimed. <b>This campaign has now ended.</b>
         <br />
         <br />
         Each Little Martian consists of 10 different shells and a random generative art pattern that comprises their DNA. Each one is unique, changing variations of patterns, colours, blurs, and intricacies. Over 18+ variables compound to create unique little martians: ready for their adventure through the cosmos.
