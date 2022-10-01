@@ -18,13 +18,14 @@ module.exports = {
     },
     hardhat: {
       accounts: defaultAccounts(),
+      blockGasLimit: 50000000
     },
     mainnet: {
       url: `https://mainnet.infura.io/v3/${infuraID}`,
       accounts: [deployAccounts[0].privateKey],
     },
-    rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${infuraID}`,
+    goerli: {
+      url: `https://goerli.infura.io/v3/${infuraID}`,
       accounts: [deployAccounts[0].privateKey],
     }
   },
@@ -32,12 +33,15 @@ module.exports = {
     apiKey: ''
   },
   solidity: {
-    version : "0.8.9",
+    version : "0.8.12",
   },
   gasReporter: {
     currency: 'USD',
     gasPrice: 34,
     coinmarketcap: CMC,
     enabled: true
+  },
+  mocha: {
+    timeout: 100000000
   }
 }

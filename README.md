@@ -1,7 +1,7 @@
 
-## Little Martians
+## Capsules of All Our Lives 
 
-Little Martians NFTs for the short story: Little Martians and The Human Memorial Monument. All metadata + art is on-chain.
+Capsules containing visualizations of all the lives lived by simulated minds. For the story "Upstream Glitches". All metadata + art is on-chain.
 
 ### Technicals
 
@@ -12,6 +12,7 @@ Little Martians NFTs for the short story: Little Martians and The Human Memorial
 - Uses modified ERC721.
 - Blocknative for monitoring transactions.
 - web3modal for connecting to wallets.
+- hot-chain was used for initial development, but the code in there is now old.
   
 ### Development & Testing
 
@@ -26,8 +27,8 @@ It will use the default mnemonic in ```./scripts/wallet-utils.js``` and start a 
 If you need a custom mnemonic, just:   
 ```export MNEMONIC="<insert_your_own_mnemonic_here>```   
 ```yarn run deploy_contracts_local```  
+Save the deployed address manually and copy-paste it to address in react-app/src/App.js.   
 Optionally, you can modify "set_testnet_balance" to give other address some test ETH.   
-Save the address manually and copy-paste it to address in react-app/src/App.js.   
 ```yarn run publish_contracts```  
 This copies the build files to the react-app.
 

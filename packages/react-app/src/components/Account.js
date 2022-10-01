@@ -77,7 +77,7 @@ export default function Account(props) {
 
   return (
     <div className="account" >
-      <span style={{float:"left",marginTop:"4px"}}> <h3><Link to="/">LITTLE MARTIANS</Link> </h3>
+      <span style={{float:"left",marginTop:"4px"}}> <h3><Link to="/">CAPSULES OF ALL OUR LIVES</Link> </h3>
       
       </span>
       {displayAddress}

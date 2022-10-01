@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Button, Form, Input } from "antd";
-
+import { Button, Form, Input, InputNumber } from "antd";
 
 import NFTImg from "./splash.png"; 
 import CellsComponent from "./CellsComponent";
@@ -8,14 +7,18 @@ import { keccak256 } from "ethers/lib/utils";
 
 function IntroPage(props) {
 
+    const [displayFromSeedForm] = Form.useForm();
     const [mintSection, setMintSection] = useState('');
     const [displaySection, setDisplaySection] = useState('');
+    const [seed, setSeed] = useState('0');
+    const [owner, setOwner] = useState(null);
+    const [initialDraw, setInitialDraw] = useState(false);
 
-    const startDateString = "18 April 2022 14:00 GMT";
-    const endDateString = "16 May 2022 14:00 GMT";
-    const snapshotDate = "11 April 2022 14:00 GMT";
-    const startDateUnix = 1650290400;
-    const endDateUnix = 1652709600;
+    const startDateString = "03 October 2022 14:00 GMT";
+    const endDateString = "31 October 2022 14:00 GMT";
+    const snapshotDate = "26 September 2022 14:00 GMT";
+    const startDateUnix = 166480560; // 1664805600
+    const endDateUnix = 1667224800;
 
     const wrongNetworkHTML = <Fragment>You are on the wrong network. Please switch to mainnet on your web3 wallet and refresh the page.</Fragment>;
 
@@ -24,8 +27,34 @@ function IntroPage(props) {
       the <a href="https://metamask.io">MetaMask Chrome extension</a> or open in an Ethereum-compatible browser.]
     </Fragment>;
 
-    function mintNFT() {
-      props.mintNFT();
+    function withdrawETH() {
+      props.withdrawETH();
+    }
+
+    function displayFromSeed(values) {
+      props.displayFromSeed(values.seed);
+    }
+
+    function seedChanged(changedValues) {
+      console.log(changedValues);
+      setSeed(changedValues.seed);
+    }
+
+    function generateRandomSeed() {
+      const randomNr = Math.floor(Math.random()*1000000);
+      displayFromSeedForm.setFieldValue("seed", randomNr);
+      seedChanged({"seed": randomNr});
+      displayFromSeedForm.submit();
+    }
+
+    function mintCustomNFT() {
+      console.log(seed);
+      props.mintCustomNFT(seed);
+    }
+
+    function mintRandomNFT() {
+      console.log('minting random NFT');
+      props.mintRandomNFT();
     }
 
     function claim() {
@@ -33,22 +62,21 @@ function IntroPage(props) {
       props.claim(props.tree.getHexProof(keccak256(props.address)));
     }
 
-    const [owner, setOwner] = useState(null);
-
     useEffect(() => {
-
         if(typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
+
           console.log(props.address.toLowerCase());
           let disabled = true; 
           var unix = Math.round(+new Date()/1000);
           if(unix >= startDateUnix) { disabled = false; }
 
           let claimHTML = <Fragment>
-            You are not eligible for a free claim. <br />
-            <br />
-            <Button size={"small"} disabled={true} loading={props.minting} onClick={claim}>
-                Claim Little Martian
+            <Button type="primary" size={"medium"} disabled={true} loading={props.minting} onClick={claim}>
+                Claim a Random Capsule 
               </Button>
+              <br />
+              <br />
+            You are not eligible for a free claim. <br />
           </Fragment>
 
           // verify is address is in the tree
@@ -59,101 +87,172 @@ function IntroPage(props) {
 
           if(inTree) {
             claimHTML = <Fragment>
-              The campaign has ended. No more claiming is possible. <br />
-              <br />
-              <Button size={"small"} disabled={true} loading={props.minting} onClick={claim}>
-                Claim Little Martian
+              <Button type="primary" size={"medium"} disabled={disabled} loading={props.minting} onClick={claim}>
+                Claim a Random Capsule
               </Button>
+              <br />
+              <br />
+              You are eligible to claim a free random capsule! Thank you for the support! <br />
               </Fragment>
+
+              if(props.alreadyClaimed == true) {
+                claimHTML = <Fragment>
+              <Button type="primary" size={"medium"} disabled={false} loading={props.minting} onClick={claim}>
+                Claim a Random Capsule
+              </Button>
+              <br />
+              <br />
+              You are eligible to claim a free random capsule! Thank you for the support! (You've already claimed a free capsule). <br />
+              </Fragment>
+              }
           }
 
+          let mintButton;
+          let disabledSeedMint = true;
+          if(props.SVG !== null) {
+            disabledSeedMint = disabled;
+          }
+          mintButton = <Button type="primary" size={"medium"} disabled={disabledSeedMint} loading={props.minting} onClick={mintCustomNFT}>
+            Mint Custom Capsule with Seed: {displayFromSeedForm.getFieldValue("seed")}
+          </Button>
+
           const newMintHTML = <Fragment>
-            <b>{props.dfPrice} ETH per Little Martian.</b> <br />Available to mint and claim, with no supply limit, from {startDateString} until {endDateString}. <b>The campaign has ended!</b> <br />
+            <h3>Custom Capsules: {props.seedPrice} ETH per mint.</h3> Available to mint, with no supply limit, from {startDateString} until {endDateString}.<br />
             <br />
-            <Button size={"small"} disabled={true} loading={props.minting} onClick={mintNFT}>
-                Mint Little Martian
+            To mint a custom capsule, you must choose a seed. The capsule that will be generated is defined by this seed and the address used to mint it. Thus, it remains a unique capsule to you! 
+            Each custom capsule is generated from this combined seed to produce 29 unique variables that generates a unique capsule. There are 53 experiences to draw from.<br />
+            <br />
+            Preview the capsule by playing with the number in the form below.
+            If you are happy with the result, you can mint it.<br />
+            <br />
+            <h3> Random Capsules: {props.randomPrice} ETH per mint.</h3> Available to mint and claim, with no supply limit, from {startDateString} until {endDateString}.<br />
+            <br />
+            Can't decide what to mint? Want to be surprised? Mint a random capsule. Along with the 62 experiences, there's a 1/3 chance for each experience that is generated to be from a rare set of experiences (33 experiences)! 
+            The rare experiences can only be generated from random mints.
+            A rare experience is denoted by a striped line instead of a solid line.
+            <br />
+            <br />
+            <h2> [] MINT </h2>
+            {displaySection}
+
+            <Form layout="inline" size="small"  form={displayFromSeedForm} name="control-hooks" onFinish={displayFromSeed} onValuesChange={seedChanged}>
+            <Form.Item name="seed" rules={[
+              { required: true,  message: "Number Required!"}
+              ]}>
+              <InputNumber /> 
+            </Form.Item>
+            <br /><br /> 
+            <Form.Item>
+              <Button htmlType="submit">
+              Preview a Capsule from a Custom Seed
+              </Button>
+            </Form.Item>
+            </Form>
+            <Button size={"small"} onClick={generateRandomSeed}>
+              Preview a Capsule with a New Random Seed 
+            </Button>
+            <br />
+            <br />
+            
+            {mintButton}
+            <br />
+            <br />
+            <Button type="primary" size="medium" disabled={disabled} loading={props.minting} onClick={mintRandomNFT}>
+              Mint a Random Capsule
+            </Button>
+            <Button type="primary" size="medium" disabled={disabled} loading={props.minting} onClick={withdrawETH}>
+              Withdraw ETH
             </Button>
             <br />
             <br />
             {claimHTML}
-            <br />
             <br />
             By minting, you agree to the <a href="https://github.com/Untitled-Frontier/tlatc/blob/master/TOS_PP.pdf">Terms of Service</a>.
             <br />
             <br />
           </Fragment>
 
-          // verifyClaim();
           setMintSection(newMintHTML);
+
         }
-    }, [props.address, props.NFTSigner, props.minting, props.tree]);
+    }, [props.address, props.NFTSigner, props.minting, props.tree, props.vm, props.localNFTAddress, props.alreadyClaimed, displaySection, seed]);
+
+    // once it's possible to mint, load up a capsule preview
+    useEffect(() => {
+      if(initialDraw == false && typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
+        generateRandomSeed();
+        setInitialDraw(true);
+      }
+    }, [mintSection]);
 
     useEffect(() => {
-        if(props.injectedChainId !== props.hardcodedChainId && props.injectedChainId !== null) {
-          setMintSection(wrongNetworkHTML);
-        } else if(props.injectedChainId == null) {
-          setMintSection(offlineHTML);
-        }
-      }, [props.hardcodedChainId, props.NFTSigner]);
+      if(props.injectedChainId !== props.hardcodedChainId && props.injectedChainId !== null) {
+        setMintSection(wrongNetworkHTML);
+      } else if(props.injectedChainId == null) {
+        setMintSection(offlineHTML);
+      }
+    }, [props.hardcodedChainId, props.NFTSigner]);
 
     useEffect(() => {
-      
-      if(props.tokenId !== 0) {
-        console.log('tid: ', props.tokenId)
-        // new NFT was minted, thus display it.
+      console.log(props.SVG);
+      if(props.SVG !== null) {
         setDisplaySection(
           <Fragment>
-            <h2>Your new Little Martian!</h2>
-            <CellsComponent tokenId={props.tokenId} NFTSigner={props.NFTSigner} /> <br />
-            To interact with the NFT: to view it, to transfer it, and to see other NFTs, head to <a href="https://opensea.io/collection/logged-universe-little-martians" target="_blank">OpenSea</a>. 
-            It's a platform to view and interact with NFTs, including Little Martians. It will be in your profile. 
-            If you choose to mint another, new Little Martian, it will update to display your new one. All Little Martians, however, are recorded
-            on the Ethereum blockchain, and viewable in OpenSea.
+            <h2>A Preview of a Capsule:</h2>
+            <CellsComponent svg={props.SVG} /> <br />
           </Fragment>
         );
       }
-    }, [props.tokenId, props.NFTSigner]);
+    }, [props.SVG]);
+
+    useEffect(() => {
+      if(props.mintedSVG !== null) {
+        setDisplaySection(
+          <Fragment>
+            <h2>Your new capsule has been minted!</h2>
+            <CellsComponent svg={props.mintedSVG} /> <br />
+            To interact with the NFT: to view it, to transfer it, and to see other NFTs, head to <a href="https://opensea.io/collection/capsules-of-all-our-lives" target="_blank">OpenSea</a>. 
+            It's a platform to view and interact with NFTs, including the Capsules. It will be in your profile. 
+            If you choose to mint another, new Capsule, it will update to display your new one. All Capsules, however, are recorded
+            on the Ethereum blockchain, and viewable in OpenSea.<br />
+            <br />
+          </Fragment>
+        );
+      }
+    }, [props.mintedSVG]);
 
     return (
-
         <div className="App" style={{textAlign:"justify"}}> 
-        <img src={NFTImg} alt="Little Martians" style={{display:"block", marginLeft:"auto", marginRight: "auto", maxWidth:"100%"}}/> <br />
-        In the story, <a href="https://www.untitledfrontier.studio/blog/logged-universe-3-little-martians-amp-the-human-memorial-monument">"Little Martians and The Human Memorial Monument" by Vanessa Rosa</a>, the Martian, Nyx, gives simulated minds a new home and stores them in cosmic ceramic bodies.
-        The patterns on the outside stores the information that defines who they are. NFT memorabilia for this story consists of <a href="https://foundation.app/collection/lmhmm">12 generative, limited edition scenes on Foundation</a> and on-chain Little Martians.
+        <img src={NFTImg} alt="Capsules of All Our Lives" style={{display:"block", marginLeft:"auto", marginRight: "auto", maxWidth:"100%"}}/> <br />
+        In the story, <a href="https://www.untitledfrontier.studio/blog/logged-universe-4-upstream-glitches">"Upstream Glitches" by Vesta Gheibi</a>, one of the lessons in the simulation's first school of unlearning, Marsa and other uploaded minds, have to capture all the lives they have lived in capsules. 
+        Fans can collect these capsules as memorabilia in the form of on-chain generative art SVG.
         <br />
         <br />
-        <video controls src="https://ipfs.io/ipfs/QmNfFaTqxeazRAVXnNt46oU5jVhtsFiz89rzG6wS1rnod1/nft.mp4" width="100%">
+        <video controls src="https://d2ybmb80bbm9ts.cloudfront.net/Dp/Ys/QmdQoiskPF8iqkVMU4rNteqrCbVtioMuA3F8iXXpHoDpYs/nft_q4.mp4" width="100%">
         Sorry, your browser doesn't support embedded videos.
         </video>
-        <i>A Generative Art Scene by Vanessa Rosa and Gene Kogan. <a href="https://foundation.app/collection/lmhmm">Available on Foundation</a>.</i>
+        <i>The cover video as an NFT by Untitled Frontier and Dr. Chicken Gristle. <a href="https://foundation.app/@un_frontier/lucs/1">Available on Foundation</a>.</i>
         <br />
         <br />
-        <h2>[] On-chain Little Martians</h2>
-        The on-chain "Little Martians" come in the form of fully on-chain generative art NFTs! 
-        From {startDateString} until {endDateString}, fans can mint on-chain Little Martians. 
-        If you held any Anchor Certificate from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-1-the-line-to-anchor-city">"The Line To Anchor City"</a> PLUS any Painting of Forgotten Souls from <a href="https://www.untitledfrontier.studio/blog/the-logged-universe-2-memories-of-atlas">"Memories of Atlas"</a> by the snapshot date of {snapshotDate}, you can claim an on-chain Martian for free!
+        <h2>[] Capsules of All Our Lives</h2>
+        From {startDateString} until {endDateString}, fans can mint or claim on-chain capsules. To be eligible to claim a capsule for free, you would have had to have owned an NFT from all the previous 3 stories combined by {snapshotDate}. Any amount of capsules can be generated during the campaign period of 4 weeks. 
+        After this period, no new ones can be minted or claimed.
         <br />
         <br />
-        Any amount of on-chain Little Martians can be generated during the campaign period of 4 weeks. 
-        After this period no new ones can be minted or claimed. <b>This campaign has now ended.</b>
+        Each capsule contains 29 different variables that inform and change its appearance. Each unique is thus unique, lending itself to different glitches, shades of colours, and marked experiences.
         <br />
         <br />
-        Each Little Martian consists of 10 different shells and a random generative art pattern that comprises their DNA. Each one is unique, changing variations of patterns, colours, blurs, and intricacies. Over 18+ variables compound to create unique little martians: ready for their adventure through the cosmos.
+        The components that make up the Capsules are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Thus, you are free to use the NFTs as you wish. <a href="https://github.com/Untitled-Frontier/lmhmm">The code is available on Github.</a>
         <br />
         <br />
-        The components that make up the Little Martians are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Thus, you are free to use the NFTs as you wish. <a href="https://github.com/Untitled-Frontier/lmhmm">The code is available on Github.</a>
-        <br />
-        <br />
-        You can view already minted "Little Martians" on <a href="https://opensea.io/collection/logged-universe-little-martians" target="_blank">OpenSea</a>.
+        You can view already minted "Capsules" on <a href="https://opensea.io/collection/capsules-of-all-our-lives" target="_blank">OpenSea</a>.
         <br />
         <br />
         {/* MINT SECTION */}
         <div className="section">
-        <h2>[] Mint/Claim</h2>
+        <h2>[] DETAILS: Custom vs Random Capsules </h2>
         {mintSection}
         </div>
-        <br />
-        {displaySection}
         <br />
         <br />
         </div>
