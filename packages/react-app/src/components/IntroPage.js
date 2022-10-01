@@ -242,7 +242,7 @@ function IntroPage(props) {
         Each capsule contains 29 different variables that inform and change its appearance. Each unique is thus unique, lending itself to different glitches, shades of colours, and marked experiences.
         <br />
         <br />
-        The components that make up the Capsules are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Thus, you are free to use the NFTs as you wish. <a href="https://github.com/Untitled-Frontier/lmhmm">The code is available on Github.</a>
+        The components that make up the Capsules are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Thus, you are free to use the NFTs as you wish. <a href="https://github.com/Untitled-Frontier/ug">The code is available on Github.</a>
         <br />
         <br />
         You can view already minted "Capsules" on <a href="https://opensea.io/collection/capsules-of-all-our-lives" target="_blank">OpenSea</a>.
