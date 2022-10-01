@@ -13,11 +13,12 @@ function IntroPage(props) {
     const [seed, setSeed] = useState('0');
     const [owner, setOwner] = useState(null);
     const [initialDraw, setInitialDraw] = useState(false);
+    const [formExists, setFormExists] = useState(false);
 
     const startDateString = "03 October 2022 14:00 GMT";
     const endDateString = "31 October 2022 14:00 GMT";
     const snapshotDate = "26 September 2022 14:00 GMT";
-    const startDateUnix = 166480560; // 1664805600
+    const startDateUnix = 1664805600; // 1664805600
     const endDateUnix = 1667224800;
 
     const wrongNetworkHTML = <Fragment>You are on the wrong network. Please switch to mainnet on your web3 wallet and refresh the page.</Fragment>;
@@ -27,11 +28,13 @@ function IntroPage(props) {
       the <a href="https://metamask.io">MetaMask Chrome extension</a> or open in an Ethereum-compatible browser.]
     </Fragment>;
 
-    function withdrawETH() {
+    // Not being used in the interface but keeping it in here for future
+    /*function withdrawETH() {
       props.withdrawETH();
-    }
+    }*/
 
     function displayFromSeed(values) {
+      console.log(values);
       props.displayFromSeed(values.seed);
     }
 
@@ -44,6 +47,8 @@ function IntroPage(props) {
       const randomNr = Math.floor(Math.random()*1000000);
       displayFromSeedForm.setFieldValue("seed", randomNr);
       seedChanged({"seed": randomNr});
+      console.log('rnr');
+      console.log(randomNr);
       displayFromSeedForm.submit();
     }
 
@@ -63,7 +68,7 @@ function IntroPage(props) {
     }
 
     useEffect(() => {
-        if(typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
+        if(typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null && props.injectedChainId === props.hardcodedChainId) {
 
           console.log(props.address.toLowerCase());
           let disabled = true; 
@@ -160,9 +165,6 @@ function IntroPage(props) {
             <Button type="primary" size="medium" disabled={disabled} loading={props.minting} onClick={mintRandomNFT}>
               Mint a Random Capsule
             </Button>
-            <Button type="primary" size="medium" disabled={disabled} loading={props.minting} onClick={withdrawETH}>
-              Withdraw ETH
-            </Button>
             <br />
             <br />
             {claimHTML}
@@ -173,20 +175,21 @@ function IntroPage(props) {
           </Fragment>
 
           setMintSection(newMintHTML);
-
+          setFormExists(true); // this is necessary to ensure that if it's on the wrong network that it doesn't try to generate a seed.
         }
     }, [props.address, props.NFTSigner, props.minting, props.tree, props.vm, props.localNFTAddress, props.alreadyClaimed, displaySection, seed]);
 
     // once it's possible to mint, load up a capsule preview
     useEffect(() => {
-      if(initialDraw == false && typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
+      if(formExists == true && initialDraw == false && typeof props.address !== 'undefined' && props.NFTSigner !== null && props.tree !== null) {
         generateRandomSeed();
         setInitialDraw(true);
       }
-    }, [mintSection]);
+    }, [mintSection, formExists]);
 
     useEffect(() => {
       if(props.injectedChainId !== props.hardcodedChainId && props.injectedChainId !== null) {
+        console.log('wrong network');
         setMintSection(wrongNetworkHTML);
       } else if(props.injectedChainId == null) {
         setMintSection(offlineHTML);

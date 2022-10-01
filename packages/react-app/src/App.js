@@ -228,12 +228,13 @@ function App() {
     });
   }
 
-  async function withdrawETH() {
+  // Not being used in the interface but keeping it in here. Was used in testing goerli.
+  /*async function withdrawETH() {
     let val = ethers.utils.parseEther(randomPrice);
     const tx = Transactor(injectedProvider, gasPrice);
     setMinting(true);
     tx(NFTSigner.functions.withdrawETH(), async function (update) {
-      /*Used for testing UI*/
+      /*Used for testing UI
       // await new Promise(resolve => setTimeout(resolve, 5000));
       console.log(update);
       console.log(update.eventCode);
@@ -245,19 +246,19 @@ function App() {
         setMinting(false);
       }
 
-      /* if user denies tx */
+      /* if user denies tx 
       if(update.code !== undefined) {
         if(update.code === 4001) {
           setMinting(false);
         }
 
-        /* if too high gas limit */
+        /* if too high gas limit
         if(update.code === "UNPREDICTABLE_GAS_LIMIT") {
           setMinting(false);
         }
       }
     });
-  }
+  }*/
 
   async function mintRandomNFT() {
     let val = ethers.utils.parseEther(randomPrice);
@@ -354,7 +355,6 @@ function App() {
             displayFromSeed={displayFromSeed}
             mintCustomNFT={mintCustomNFT}
             mintRandomNFT={mintRandomNFT}
-            withdrawETH={withdrawETH}
             claim={claim}
             alreadyClaimed={alreadyClaimed}
             SVG={SVG}
