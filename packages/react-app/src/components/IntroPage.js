@@ -18,7 +18,7 @@ function IntroPage(props) {
     const startDateString = "03 October 2022 14:00 GMT";
     const endDateString = "31 October 2022 14:00 GMT";
     const snapshotDate = "26 September 2022 14:00 GMT";
-    const startDateUnix = 1664805600; // 1664805600
+    const startDateUnix = 166480560; // 1664805600
     const endDateUnix = 1667224800;
 
     const wrongNetworkHTML = <Fragment>You are on the wrong network. Please switch to mainnet on your web3 wallet and refresh the page.</Fragment>;
