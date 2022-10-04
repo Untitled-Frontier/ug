@@ -257,7 +257,11 @@ function IntroPage(props) {
         <i>The cover video as an NFT by Untitled Frontier and Dr. Chicken Gristle and is also <a href="https://foundation.app/@un_frontier/lucs/1">available on Foundation</a>.</i>
         <br />
         <br />
-
+        You can listen to the story here: <br />
+        <br />
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/e4E2Rr3tAMs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <br />
+        <br />
         <br />
         <br />
         </div>
