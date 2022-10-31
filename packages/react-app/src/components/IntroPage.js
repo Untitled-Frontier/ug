@@ -74,7 +74,8 @@ function IntroPage(props) {
           console.log(props.address.toLowerCase());
           let disabled = true; 
           var unix = Math.round(+new Date()/1000);
-          if(unix >= startDateUnix) { disabled = false; }
+          if(unix >= startDateUnix) { disabled = false; } 
+          if(unix >= endDateUnix) { disabled = true; } 
 
           let claimHTML = <Fragment>
           </Fragment>
