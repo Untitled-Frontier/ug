@@ -213,6 +213,9 @@ function IntroPage(props) {
         From <b>{startDateString} until {endDateString}</b>, fans can mint or claim on-chain, generative art capsules from the Logged Universe story, "Upstream Glitches" (a limited time only)! Details below.
         <br />
         <br />
+        <b>THE CAMPAIGN HAS ENDED. THANK YOU FOR THE SUPPORT!</b>
+        <br />
+        <br />
         {/* MINT SECTION */}
         <div className="section">
         {mintSection}
