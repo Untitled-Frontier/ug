@@ -99,6 +99,24 @@ contract Collection is ERC721 {
     }
 
     /*
+    A function used to help generate stats from live data
+
+    */
+    function generateTraitsWithCustomRandom(uint256 tokenId, bool randomOrNot) public view returns (string memory) {
+        return descriptor.generateTraits(tokenId, randomOrNot);
+    }
+
+    /*function generateTokenURIWithCustomRandom(uint256 tokenId, bool randomOrNot) public view returns (string memory) {
+        return descriptor.generateTraits(tokenId, randomOrNot);
+    }*/
+
+    function generateTraitsWithSeedAndAddress(uint256 _seed, address _minter, bool randomMint) public view returns (string memory) {
+        // for random seeds, need to re-use block timestamps.
+        uint256 customTokenId = uint(keccak256(abi.encodePacked(_seed, _minter)));
+        return descriptor.generateTraits(customTokenId, randomMint);
+    }
+
+    /*
     VM Viewers:
     These drawing functions are used inside the browser vm to display the capsule without having to call a live network.
     */

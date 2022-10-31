@@ -16,6 +16,7 @@
     "build": "yarn workspace @capsules/react-app build --max-old-space-size=12288",
     "chain": "yarn workspace @capsules/hardhat chain",
     "generate_merkle_root": "yarn workspace @capsules/hardhat generate_merkle_root",
+    "generate_trait_stats": "yarn workspace @capsules/hardhat generate_trait_stats",
     "deploy_contracts_local": "yarn workspace @capsules/hardhat deploy_local",
     "deploy_contracts_goerli": "yarn workspace @capsules/hardhat deploy_goerli",
     "deploy_contracts_mainnet": "yarn workspace @capsules/hardhat deploy_mainnet",

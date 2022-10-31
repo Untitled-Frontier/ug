@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/simondlr2/code/ethereum/capsules/capsules/packages/hardhat/contracts/Collection.sol": {
-      "lastModificationDate": 1664566957697,
-      "contentHash": "fb0db88418db6d9adb54c677969d16df",
+      "lastModificationDate": 1665623393056,
+      "contentHash": "455f55531048209c9e65c9dec845a37b",
       "sourceName": "contracts/Collection.sol",
       "solcConfig": {
         "version": "0.8.12",
